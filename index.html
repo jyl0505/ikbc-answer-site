@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ikbc 答案系列</title>
+<style>
+  :root {
+    --bg: #0a0b10;
+    --card: #12141e;
+    --border: #1e2130;
+    --accent: #818cf8;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --dim: #8892a8;
+    --bright: #f1f5f9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+  .hero {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--dim);
+    font-size: 1rem;
+  }
+  .cards {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 700px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 36px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s;
+    width: 300px;
+    text-align: center;
+  }
+  .card:hover {
+    border-color: rgba(129,140,248,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  }
+  .card .icon {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+  }
+  .card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 0.85rem;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+  .footer {
+    margin-top: 60px;
+    color: var(--dim);
+    font-size: 0.75rem;
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <h1>ikbc <span>答案系列</span></h1>
+    <p>选择答案，一把毕业</p>
+  </div>
+  <div class="cards">
+    <a class="card" href="product.html">
+      <div class="icon">⌨</div>
+      <h2>产品介绍</h2>
+      <p>答案87/98 星环键帽键盘，核心配置、星环键帽创新、达人拍摄注意事项</p>
+    </a>
+    <a class="card" href="process.html">
+      <div class="icon">📋</div>
+      <h2>达人建联流程</h2>
+      <p>抖音达人合作 SOP，从找达人到视频发布的完整流程与话术</p>
+    </a>
+  </div>
+  <div class="footer">© 2007 - 2026 ikbc</div>
+</body>
+</html>

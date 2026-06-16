@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抖音达人建联流程</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --card-hover: #22263a;
+    --border: #2a2e3d;
+    --accent: #6366f1;
+    --accent-glow: rgba(99,102,241,0.15);
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --cyan: #06b6d4;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-bright: #f8fafc;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── header ── */
+  .hero {
+    text-align: center;
+    padding: 60px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .hero .sub {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ── layout ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── flow pipeline ── */
+  .pipeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  /* vertical line */
+  .pipeline::before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--cyan), var(--green));
+    opacity: 0.4;
+  }
+
+  /* ── phase ── */
+  .phase {
+    position: relative;
+    padding-left: 76px;
+    padding-bottom: 48px;
+  }
+  .phase:last-child { padding-bottom: 0; }
+
+  /* step number circle */
+  .phase-num {
+    position: absolute;
+    left: 12px;
+    top: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    z-index: 2;
+  }
+  .phase-num.green { border-color: var(--green); color: var(--green); }
+  .phase-num.cyan { border-color: var(--cyan); color: var(--cyan); }
+  .phase-num.amber { border-color: var(--amber); color: var(--amber); }
+
+  .phase-head {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .phase-head .tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tag-ai { background: rgba(99,102,241,0.2); color: var(--accent); }
+  .tag-key { background: rgba(34,197,94,0.2); color: var(--green); }
+  .tag-warn { background: rgba(245,158,11,0.2); color: var(--amber); }
+
+  /* ── cards ── */
+  .cards { display: flex; flex-direction: column; gap: 12px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    transition: all 0.2s;
+  }
+  .card:hover { background: var(--card-hover); border-color: rgba(99,102,241,0.3); }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+  }
+
+  .card p, .card li {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+
+  /* ── speech bubble ── */
+  .speech {
+    background: rgba(99,102,241,0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.7;
+    position: relative;
+  }
+  .speech::before {
+    content: '对话';
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: var(--card);
+    padding: 0 6px;
+    font-size: 0.65rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .speech.green { border-color: var(--green); }
+  .speech.green::before { color: var(--green); }
+  .speech.amber { border-color: var(--amber); }
+  .speech.amber::before { color: var(--amber); }
+  .speech.red { border-color: var(--red); }
+  .speech.red::before { color: var(--red); }
+
+  .speech-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 1px 7px;
+    border-radius: 3px;
+    margin-right: 6px;
+    font-weight: 600;
+  }
+  .label-first { background: rgba(99,102,241,0.2); color: var(--accent); }
+  .label-follow { background: rgba(245,158,11,0.2); color: var(--amber); }
+  .label-reject { background: rgba(239,68,68,0.2); color: var(--red); }
+  .label-confirm { background: rgba(34,197,94,0.2); color: var(--green); }
+
+  /* ── branch (Y split) ── */
+  .branch-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  @media (max-width: 700px) { .branch-wrap { grid-template-columns: 1fr; } }
+
+  .branch {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .branch::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .branch-a::before { background: var(--accent); }
+  .branch-b::before { background: var(--cyan); }
+  .branch-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .branch-title .icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+  .branch-a .icon { background: rgba(99,102,241,0.2); color: var(--accent); }
+  .branch-b .icon { background: rgba(6,182,212,0.2); color: var(--cyan); }
+  .branch p, .branch li { font-size: 0.88rem; color: var(--text-dim); }
+
+  /* ── timeline mini ── */
+  .timeline-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 12px;
+    position: relative;
+    padding-left: 20px;
+  }
+  .timeline-mini::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    padding: 8px 0 8px 16px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 14px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .tl-item.done::before { background: var(--green); }
+  .tl-item.warn::before { background: var(--amber); }
+  .tl-item.danger::before { background: var(--red); }
+  .tl-time {
+    font-weight: 600;
+    color: var(--text);
+    margin-right: 6px;
+  }
+
+  /* ── table ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  th {
+    background: rgba(99,102,241,0.1);
+    color: var(--text-bright);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 14px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  tr:hover td { background: rgba(99,102,241,0.04); }
+
+  /* ── prompt block ── */
+  .prompt-block {
+    background: #111320;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  .prompt-block .hl { color: var(--accent); font-weight: 600; }
+
+  /* ── tips ── */
+  .tips {
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 12px;
+  }
+  .tips-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .tips li { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 4px; }
+
+  /* ── section divider ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 32px;
+    padding-left: 76px;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── decision diamond (CSS) ── */
+  .decision {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: rgba(245,158,11,0.06);
+    border: 1px dashed rgba(245,158,11,0.3);
+    border-radius: 10px;
+    margin: 12px 0;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+  .decision-icon {
+    width: 32px; height: 32px;
+    background: rgba(245,158,11,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* ── ai section ── */
+  .ai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .ai-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .ai-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+  .ai-card-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: rgba(99,102,241,0.15);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.75rem;
+    margin-bottom: 10px;
+  }
+  .ai-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+  .ai-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<div class="hero">
+  <h1>抖音达人建联流程</h1>
+  <p class="sub">ikbc 键盘 · 达人合作 SOP · 含 AI 辅助方案</p>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════ FLOW ════════════════════ -->
+<div class="pipeline">
+
+<!-- ── 1. 找达人 ── -->
+<div class="phase">
+  <div class="phase-num">1</div>
+  <div class="phase-head">找达人</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">搜索 & 筛选</div>
+      <ul>
+        <li>在抖音通过达人名称搜索</li>
+        <li>重名时加上「外设 / 键盘 / 机械键盘」缩小范围</li>
+        <li>找到后按资源总表要求统计：粉丝量、内容类型、互动率、联系方式</li>
+      </ul>
+      <div style="margin-top:16px; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
+        <img src="ppt_images/抖音搜索达人示例.png" alt="抖音搜索达人示例" style="width:100%; display:block;">
+      </div>
+      <p style="margin-top:8px; font-size:0.78rem; color:var(--text-dim); text-align:center;">示例：在抖音搜索关键词，切换到「用户」标签筛选达人</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── 2. 获取联系方式 ── -->
+<div class="phase">
+  <div class="phase-num">2</div>
+  <div class="phase-head">获取联系方式</div>
+
+  <div class="decision">
+    <div class="decision-icon">?</div>
+    <div>达人主页有微信号？</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">有微信号 → 直接添加</div>
+    </div>
+    <div class="card">
+      <div class="card-title">没有 → 抖音私信</div>
+      <div class="speech">
+        <span class="speech-label label-first">首次</span>
+        您好老师～我是 ikbc 键盘的品牌 PR，最近关注到您的内容，觉得风格很适合我们新品的合作，方便加个微信聊一下吗？🤝
+      </div>
+      <div class="speech amber">
+        <span class="speech-label label-follow">3天跟进</span>
+        老师您好～之前给您发过消息，不知道有没有看到？我们有一款新品想跟您聊聊合作，方便的话加个微信细说～
+      </div>
+      <div class="speech red">
+        <span class="speech-label label-reject">不回复</span>
+        二次不回复 → 放弃，不反复打扰
+      </div>
+      <div class="tips">
+        <div class="tips-title">要点</div>
+        <ul>
+          <li>称呼用「老师」，不用「亲」「你好」</li>
+          <li>一句话说清：你是谁、为什么找他、想干什么</li>
+          <li>私信目的是加微信，不谈具体合作</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 3. 加微信 ── -->
+<div class="phase">
+  <div class="phase-num green">3</div>
+  <div class="phase-head">加微信 & 初步沟通</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">通过好友后，第一条消息</div>
+      <div class="speech green">
+        <span class="speech-label label-confirm">开场</span>
+        老师好～我是 ikbc 的 [你的名字]，负责达人合作这边。我们近期有一款办公键盘想做推广，想跟您聊下合作方式～
+      </div>
+      <p style="margin-top:8px; font-size:0.85rem; color:var(--text-dim);">然后根据达人回复，进入稿费或置换路径 ↓</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── 4. 谈合作 ── -->
+<div class="phase">
+  <div class="phase-num amber">4</div>
+  <div class="phase-head">谈合作方式 <span class="tag tag-key">分支</span></div>
+
+  <div class="decision">
+    <div class="decision-icon">?</div>
+    <div>达人怎么合作？</div>
+  </div>
+
+  <div class="branch-wrap">
+    <!-- A: 稿费 -->
+    <div class="branch branch-a">
+      <div class="branch-title">
+        <div class="icon">¥</div>
+        路径 A · 稿费合作
+      </div>
+      <ol style="padding-left:18px; margin-bottom:12px;">
+        <li style="margin-bottom:6px;">达人报价 → 记录费用</li>
+        <li>判断预算是否匹配</li>
+      </ol>
+
+      <div class="speech amber">
+        <span class="speech-label label-reject">超预算</span>
+        理解的～不过说实话这款办公键盘预算有限，可能没办法按这个档期来。下次预算充足了一定优先找您合作，这次先不耽误您时间了🙏
+      </div>
+      <div class="speech">
+        <span class="speech-label label-follow">加预算</span>
+        这款是品牌方定的预算，我这边确实调不了。但您的内容我们是很认可的，后面有新品一定再合作～
+      </div>
+      <div class="tips">
+        <div class="tips-title">要点</div>
+        <ul>
+          <li>不砍价太狠，达人的报价基本是底线</li>
+          <li>说是「预算有限」不是「觉得你不值」</li>
+          <li>预算内直接确认：档期、形式、是否寄产品</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- B: 置换 -->
+    <div class="branch branch-b">
+      <div class="branch-title">
+        <div class="icon">📦</div>
+        路径 B · 置换合作
+      </div>
+      <ol style="padding-left:18px; margin-bottom:12px;">
+        <li style="margin-bottom:6px;">确认达人接受置换</li>
+        <li style="margin-bottom:6px;">告知产品：答案98星环</li>
+        <li style="margin-bottom:6px;">确认收货地址</li>
+        <li>确认出视频时间</li>
+      </ol>
+
+      <div class="speech green">
+        <span class="speech-label label-confirm">置换</span>
+        这款我们目前是置换合作，产品是我们的答案98星环机械键盘。您看这个方式可以吗？如果 OK 的话我这边安排寄出～
+      </div>
+      <div class="speech red">
+        <span class="speech-label label-reject">犹豫</span>
+        完全理解～那这次先不打扰了，后面有适合的档期我们再聊～
+      </div>
+      <div class="tips">
+        <div class="tips-title">要点</div>
+        <ul>
+          <li>不要强留，婉拒就是不想接</li>
+          <li>置换要做好心理准备：有人收到不拍</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 5. 发货跟进 ── -->
+<div class="phase">
+  <div class="phase-num cyan">5</div>
+  <div class="phase-head">发货 & 跟进 <span class="tag tag-warn">关键</span></div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">跟进时间线</div>
+      <div class="timeline-mini">
+        <div class="tl-item done">
+          <span class="tl-time">发货当天</span>
+          同步快递单号给达人
+        </div>
+        <div class="tl-item done">
+          <span class="tl-time">签收后</span>
+          确认收货
+          <div class="speech green" style="margin-top:6px;">
+            <span class="speech-label label-confirm">签收</span>
+            老师您好～看到快递已经签收了，产品有收到吗？有什么问题随时跟我说～
+          </div>
+        </div>
+        <div class="tl-item warn">
+          <span class="tl-time">收货后 3 天</span>
+          催第一次
+          <div class="speech" style="margin-top:6px;">
+            <span class="speech-label label-first">催稿①</span>
+            老师好～视频那边进展怎么样了？如果需要拍的话可以提前跟我说，我这边看看有没有需要配合的～
+          </div>
+        </div>
+        <div class="tl-item warn">
+          <span class="tl-time">收货后 6 天</span>
+          催第二次（语气加强）
+          <div class="speech amber" style="margin-top:6px;">
+            <span class="speech-label label-follow">催稿②</span>
+            老师～想跟您确认下视频的进度，因为这边有排期要求，如果这周能发就最好了🙏
+          </div>
+        </div>
+        <div class="tl-item danger">
+          <span class="tl-time">收货后 12 天</span>
+          电话/语音跟进
+          <div class="speech red" style="margin-top:6px;">
+            <span class="speech-label label-reject">最后</span>
+            语气友善，先问「最近忙吗」→ 说明排期 → 给明确时间要求
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 6. 审核发布 ── -->
+<div class="phase">
+  <div class="phase-num green">6</div>
+  <div class="phase-head">视频审核 & 发布</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">审核流程</div>
+      <div class="timeline-mini">
+        <div class="tl-item done">
+          <span class="tl-time">步骤 1</span>
+          达人拍好后先发来审核
+        </div>
+        <div class="tl-item done">
+          <span class="tl-time">步骤 2</span>
+          通过 → 确认发出
+          <div class="speech green" style="margin-top:6px;">
+            <span class="speech-label label-confirm">通过</span>
+            内容没问题，可以发了～发布后把链接发我一下，我这边记录一下🙏
+          </div>
+        </div>
+        <div class="tl-item warn">
+          <span class="tl-time">步骤 3</span>
+          需修改 → 给具体意见
+          <div class="speech" style="margin-top:6px;">
+            <span class="speech-label label-follow">修改</span>
+            老师好～内容整体挺好的，有几个小地方想跟您说下：[具体修改点]。辛苦调整一下～
+          </div>
+        </div>
+        <div class="tl-item done">
+          <span class="tl-time">步骤 4</span>
+          视频发出 → 填表 + 2天后记录数据
+        </div>
+      </div>
+      <div class="tips">
+        <div class="tips-title">要点</div>
+        <ul>
+          <li>修改意见要具体，不要「感觉不太好」</li>
+          <li>一次说完，不要改一次说一点</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /pipeline -->
+
+<!-- ════════════════════ TIMELINE TABLE ════════════════════ -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">关键节点时间表</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>节点</th><th>动作</th><th>话术要点</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>私信未回复</td><td>3天后跟进1次</td><td>简短提醒，不长篇</td></tr>
+      <tr><td>加微信</td><td>当天发自我介绍</td><td>一句话说清身份 + 目的</td></tr>
+      <tr><td>确认合作方式</td><td>24h 内给结论</td><td>超预算就说清楚，别拖</td></tr>
+      <tr><td>发货后</td><td>同步单号</td><td>主动告知</td></tr>
+      <tr><td>签收后</td><td>确认收到</td><td>问有没有问题</td></tr>
+      <tr><td>收到后 3 天</td><td>催第一次</td><td>问进度，给配合感</td></tr>
+      <tr><td>收到后 6 天</td><td>催第二次</td><td>给时间要求</td></tr>
+      <tr><td>审核通过</td><td>确认发布</td><td>要链接</td></tr>
+      <tr><td>发布后 2 天</td><td>记录数据</td><td>填表</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════ AI SECTION ════════════════════ -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">AI 辅助方案</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="ai-grid">
+
+  <!-- 1 -->
+  <div class="ai-card">
+    <div class="ai-card-num">1</div>
+    <h3>批量找达人 + 信息整理</h3>
+    <p>给 AI 关键词清单（「机械键盘」「桌面好物」），批量搜索并输出表格：粉丝量、内容类型、互动率、联系方式。也可以反向评估名单匹配度。</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="ai-card">
+    <div class="ai-card-num">2</div>
+    <h3>私信话术个性化生成</h3>
+    <p>喂达人信息（昵称、内容方向、粉丝量），AI 生成「一对一感」的私信，风格统一但不重复。</p>
+    <div class="prompt-block"><span class="hl">你是 ikbc 键盘的品牌 PR</span>，需要给抖音达人发私信建联合作。
+
+达人信息：
+- 昵称：{达人昵称}
+- 内容方向：{比如：桌面好物分享}
+- 粉丝量：{比如：10万}
+
+要求：
+1. 开头称呼用「老师」
+2. 一句话说清你是谁、为什么找他
+3. 语气友好自然，不要太官方
+4. 控制在 50 字以内</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="ai-card">
+    <div class="ai-card-num">3</div>
+    <h3>沟通记录 → 自动填表</h3>
+    <p>聊天截图或文字丢给 AI，自动提取报价、档期、地址、要求，按字段格式输出，直接粘贴到资源总表。</p>
+    <div class="prompt-block">从以下对话中提取合作相关信息：
+
+字段：达人昵称 / 联系方式 / 合作方式
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ 稿费金额 / 收货地址
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ 预计出视频时间 / 备注
+
+对话内容：
+{粘贴聊天内容}</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="ai-card">
+    <div class="ai-card-num">4</div>
+    <h3>达人报价评估</h3>
+    <p>输入粉丝量、互动率、报价、合作形式，AI 给出性价比评级和建议，辅助决策。</p>
+    <div class="prompt-block">评估以下抖音达人合作报价：
+
+- 粉丝量：{粉丝量}
+- 平均点赞：{近10条平均}
+- 稿费报价：{报价金额}
+
+输出：
+1. 性价比评级（高/中/低）
+2. 参考依据
+3. 建议（接受/还价/放弃）</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="ai-card">
+    <div class="ai-card-num">5</div>
+    <h3>催稿提醒 + 话术生成</h3>
+    <p>每天把资源总表丢给 AI，自动筛出需要催的达人，按催稿次数生成对应语气的话术。</p>
+    <div class="prompt-block">催稿规则：
+- 收货后 3 天：温和询问
+- 收货后 6 天：给时间要求
+- 收货后 12 天：最后一次联系
+
+合作记录：{粘贴数据}
+输出：达人昵称 | 催次 | 催稿话术</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="ai-card">
+    <div class="ai-card-num">6</div>
+    <h3>视频初审</h3>
+    <p>达人发来初稿，AI 先检查：产品名称、露出、卖点、竞品、违规。你只看 AI 标记的问题。</p>
+    <p style="color:var(--amber); font-size:0.8rem;">注意：节奏、美感等仍需人工把关</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="ai-card">
+    <div class="ai-card-num">7</div>
+    <h3>数据回收 + 复盘报告</h3>
+    <p>批量合作结束后，输入所有达人数据，AI 生成：整体概览、Top 5、未履约清单、置换 vs 稿费对比、下次建议。</p>
+    <div class="prompt-block">合作数据：{粘贴每个达人数据}
+
+报告要求：
+1. 整体概览（总曝光、总互动、平均性价比）
+2. Top 5 效果最好
+3. 未履约清单
+4. 置换 vs 稿费对比
+5. 下次合作建议</div>
+  </div>
+
+</div>
+
+<!-- ════════════════════ 注意事项 ════════════════════ -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">注意事项</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="cards" style="padding-left:76px;">
+  <div class="card">
+    <ul>
+      <li><strong>所有沟通记录当天填表</strong>，不要攒着，容易忘</li>
+      <li><strong>地址、单号、微信</strong>等信息及时录入资源总表</li>
+      <li><strong>置换达人</strong>收到后 7 天没动静主动联系；14 天没发标记未履约</li>
+      <li><strong>不要在一个达人身上耗太久</strong>，连续两次催没动静就止损</li>
+      <li><strong>维护好已合作达人关系</strong>，新品优先找他们</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ikbc 答案98 · 操作说明</title>
+<style>
+  :root {
+    --bg: #0a0b10;
+    --card: #12141e;
+    --border: #1e2130;
+    --accent: #818cf8;
+    --accent2: #a78bfa;
+    --cyan: #22d3ee;
+    --green: #34d399;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --dim: #8892a8;
+    --bright: #f1f5f9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── hero ── */
+  .hero {
+    position: relative;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 50px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 30% 40%, rgba(129,140,248,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 350px at 70% 60%, rgba(34,211,238,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(129,140,248,0.1);
+    border: 1px solid rgba(129,140,248,0.2);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--bright);
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--dim);
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ── container ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── section ── */
+  .section { padding: 56px 0; }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .section-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: var(--bright); }
+  .section-desc { color: var(--dim); font-size: 0.95rem; margin-bottom: 24px; max-width: 700px; }
+
+  /* ── grids ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .grid3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* ── cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: rgba(129,140,248,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  .card h3 { font-size: 1.05rem; font-weight: 700; color: var(--bright); margin-bottom: 8px; }
+  .card p, .card li { font-size: 0.88rem; color: var(--dim); line-height: 1.7; }
+  .card ul { padding-left: 16px; }
+  .card li { margin-bottom: 4px; }
+  .card .highlight { color: var(--cyan); font-weight: 600; }
+  .card .warn { color: var(--amber); font-weight: 600; }
+  .card .danger { color: var(--red); font-weight: 600; }
+
+  /* ── hardware diagram ── */
+  .hardware-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .hardware-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .hardware-grid { grid-template-columns: 1fr; } }
+  .hw-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: all 0.25s;
+  }
+  .hw-item:hover {
+    border-color: rgba(129,140,248,0.3);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .hw-num {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--bright);
+    flex-shrink: 0;
+  }
+  .hw-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--bright); margin-bottom: 4px; }
+  .hw-item p { font-size: 0.82rem; color: var(--dim); line-height: 1.6; }
+
+  /* ── step list ── */
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .step-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bright);
+    flex-shrink: 0;
+  }
+  .step-item p { font-size: 0.9rem; color: var(--dim); line-height: 1.7; }
+  .step-item strong { color: var(--bright); }
+
+  /* ── full card ── */
+  .full-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  /* ── tag ── */
+  .tag {
+    display: inline-block;
+    background: rgba(129,140,248,0.1);
+    border: 1px solid rgba(129,140,248,0.2);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .tag.green { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.2); color: var(--green); }
+  .tag.amber { background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.2); color: var(--amber); }
+
+  /* ── connection mode tabs ── */
+  .mode-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .mode-tab {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--dim);
+    text-decoration: none;
+  }
+  .mode-tab:hover, .mode-tab.active {
+    background: rgba(129,140,248,0.12);
+    border-color: rgba(129,140,248,0.3);
+    color: var(--accent);
+  }
+
+  /* ── info box ── */
+  .info-box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  .info-box.tip {
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.2);
+    color: var(--green);
+  }
+  .info-box.warn {
+    background: rgba(251,191,36,0.08);
+    border: 1px solid rgba(251,191,36,0.2);
+    color: var(--amber);
+  }
+  .info-box.danger {
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    color: var(--red);
+  }
+
+  /* ── cta ── */
+  .cta {
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+  }
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 500px 300px at 50% 50%, rgba(129,140,248,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta h2 { font-size: 1.6rem; font-weight: 800; color: var(--bright); margin-bottom: 10px; position: relative; }
+  .cta p { color: var(--dim); font-size: 0.95rem; margin-bottom: 24px; position: relative; }
+  .cta-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(129,140,248,0.12);
+    border: 1px solid rgba(129,140,248,0.25);
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 0.88rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-link:hover { background: rgba(129,140,248,0.2); transform: translateY(-2px); }
+
+  /* ── footer ── */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--dim);
+    font-size: 0.78rem;
+  }
+
+  /* ── divider ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">ikbc 答案98</div>
+  <h1>操作<span>说明</span></h1>
+  <p class="hero-sub">98 键三模机械键盘 · 连接方式 · 硬件说明 · 常见问题</p>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════ 硬件说明 ═══════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(129,140,248,0.15); color:var(--accent);">🔧</div>
+    <div class="section-title">硬件说明</div>
+  </div>
+  <p class="section-desc">键盘各接口与开关位置说明。</p>
+
+  <div class="hardware-grid">
+    <div class="hw-item">
+      <div class="hw-num" style="background:rgba(129,140,248,0.15); color:var(--accent);">1</div>
+      <div>
+        <h4>TYPE-C 接口</h4>
+        <p>充电和有线模式共用接口，支持边充边用。</p>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-num" style="background:rgba(34,211,238,0.15); color:var(--cyan);">2</div>
+      <div>
+        <h4>WIN/MAC 选择开关</h4>
+        <p>切换 Windows 和 Mac 系统键位布局。</p>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-num" style="background:rgba(52,211,153,0.15); color:var(--green);">3</div>
+      <div>
+        <h4>Scroll Lock 指示灯</h4>
+        <p>指示 Scroll Lock 锁定状态。</p>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-num" style="background:rgba(251,191,36,0.15); color:var(--amber);">4</div>
+      <div>
+        <h4>电源开关</h4>
+        <p>ON/OFF 拨动开关，控制键盘电源。</p>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-num" style="background:rgba(167,139,250,0.15); color:var(--accent2);">5</div>
+      <div>
+        <h4>模式选择开关</h4>
+        <p>切换 2.4G / BT（蓝牙）/ 有线 三种连接模式。</p>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-num" style="background:rgba(248,113,113,0.15); color:var(--red);">6</div>
+      <div>
+        <h4>Mac 系统模式档位</h4>
+        <p>专用于 Mac 系统的模式档位。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ 连接方式 ═══════════════════════ -->
+<div class="section" id="sec-connect">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(34,211,238,0.15); color:var(--cyan);">🔗</div>
+    <div class="section-title">连接方式</div>
+  </div>
+  <p class="section-desc">答案98 支持三种连接模式，通过键盘侧面的模式选择开关切换。</p>
+
+  <div class="grid3">
+    <!-- 2.4G 无线 -->
+    <div class="card" style="border-top:3px solid var(--green);">
+      <div class="card-icon" style="background:rgba(52,211,153,0.12); color:var(--green);">📡</div>
+      <h3>2.4G 无线连接</h3>
+      <p>低延迟，适合游戏和办公。</p>
+      <div class="step-list" style="margin-top:16px;">
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(52,211,153,0.15); color:var(--green);">1</div>
+          <p>将模式开关拨到 <strong>2.4G</strong> 位置</p>
+        </div>
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(52,211,153,0.15); color:var(--green);">2</div>
+          <p>将 2.4G 接收器插入电脑 USB 口</p>
+        </div>
+      </div>
+      <div class="info-box tip" style="margin-top:12px;">
+        出厂已完成配对，即插即用。
+      </div>
+    </div>
+
+    <!-- 蓝牙 -->
+    <div class="card" style="border-top:3px solid var(--accent);">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12); color:var(--accent);">📶</div>
+      <h3>蓝牙连接</h3>
+      <p>最多配对 3 台设备，快捷切换。</p>
+      <div class="step-list" style="margin-top:16px;">
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(129,140,248,0.15); color:var(--accent);">1</div>
+          <p>将模式开关拨到 <strong>BT</strong>（蓝牙）位置</p>
+        </div>
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(129,140,248,0.15); color:var(--accent);">2</div>
+          <p>长按 <strong>Fn + Q/W/E</strong> 任意一个 3 秒</p>
+        </div>
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(129,140,248,0.15); color:var(--accent);">3</div>
+          <p>按键快速闪烁后，在电脑蓝牙列表中找到 <strong>ikbc BT</strong> 并连接</p>
+        </div>
+      </div>
+      <div class="info-box warn" style="margin-top:12px;">
+        30 秒内未完成连接将进入休眠。
+      </div>
+    </div>
+
+    <!-- USB 有线 -->
+    <div class="card" style="border-top:3px solid var(--cyan);">
+      <div class="card-icon" style="background:rgba(34,211,238,0.12); color:var(--cyan);">🔌</div>
+      <h3>USB 有线连接</h3>
+      <p>最稳定的连接方式，边充边用。</p>
+      <div class="step-list" style="margin-top:16px;">
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(34,211,238,0.15); color:var(--cyan);">1</div>
+          <p>将模式开关拨到 <strong>有线</strong> 位置</p>
+        </div>
+        <div class="step-item" style="background:rgba(255,255,255,0.02); border:none; padding:10px 0;">
+          <div class="step-num" style="background:rgba(34,211,238,0.15); color:var(--cyan);">2</div>
+          <p>用 TYPE-C 数据线连接键盘和电脑</p>
+        </div>
+      </div>
+      <div class="info-box tip" style="margin-top:12px;">
+        有线模式下可同时充电。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ 配对操作 ═══════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(251,191,36,0.15); color:var(--amber);">⚙</div>
+    <div class="section-title">重新配对</div>
+  </div>
+  <p class="section-desc">键盘出厂已完成配对，只有更换接收器时才需要重新配对。</p>
+
+  <div class="grid2">
+    <!-- 2.4G 重新配对 -->
+    <div class="full-card">
+      <h3 style="font-size:1.05rem; font-weight:700; color:var(--bright); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.2rem;">📡</span> 2.4G 接收器重新配对
+      </h3>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num" style="background:rgba(251,191,36,0.15); color:var(--amber);">1</div>
+          <p>将模式开关拨到 <strong>2.4G</strong> 位置</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:rgba(251,191,36,0.15); color:var(--amber);">2</div>
+          <p>长按 <strong>Fn + R</strong> 组合键 3 秒，进入配对模式</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:rgba(251,191,36,0.15); color:var(--amber);">3</div>
+          <p>将键盘靠近电脑，插入新的 2.4G 接收器</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:rgba(251,191,36,0.15); color:var(--amber);">4</div>
+          <p>等待 <strong>R 键闪烁绿色背光</strong> → 常亮 2 秒后熄灭 = 配对成功</p>
+        </div>
+      </div>
+      <div class="info-box warn" style="margin-top:16px;">
+        找不到配对设备 30 秒后自动退出配对模式，键盘进入睡眠。
+      </div>
+    </div>
+
+    <!-- 蓝牙多设备 -->
+    <div class="full-card">
+      <h3 style="font-size:1.05rem; font-weight:700; color:var(--bright); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.2rem;">📶</span> 蓝牙多设备切换
+      </h3>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num" style="background:rgba(129,140,248,0.15); color:var(--accent);">1</div>
+          <p>蓝牙模式下，最多可存储 <strong>3 套配对</strong>设备</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num" style="background:rgba(129,140,248,0.15); color:var(--accent);">2</div>
+          <p>短按 <strong>Fn + Q</strong> / <strong>W</strong> / <strong>E</strong> 切换已配对设备</p>
+        </div>
+      </div>
+      <div style="margin-top:20px; padding:16px; background:rgba(255,255,255,0.02); border-radius:10px;">
+        <p style="font-size:0.85rem; color:var(--dim); margin-bottom:12px;"><strong style="color:var(--bright);">配对槽位说明：</strong></p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:80px; text-align:center; padding:12px; background:rgba(129,140,248,0.06); border-radius:8px;">
+            <div style="font-size:1.2rem; font-weight:700; color:var(--accent);">Q</div>
+            <div style="font-size:0.75rem; color:var(--dim); margin-top:4px;">设备 1</div>
+          </div>
+          <div style="flex:1; min-width:80px; text-align:center; padding:12px; background:rgba(34,211,238,0.06); border-radius:8px;">
+            <div style="font-size:1.2rem; font-weight:700; color:var(--cyan);">W</div>
+            <div style="font-size:0.75rem; color:var(--dim); margin-top:4px;">设备 2</div>
+          </div>
+          <div style="flex:1; min-width:80px; text-align:center; padding:12px; background:rgba(52,211,153,0.06); border-radius:8px;">
+            <div style="font-size:1.2rem; font-weight:700; color:var(--green);">E</div>
+            <div style="font-size:0.75rem; color:var(--dim); margin-top:4px;">设备 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ 系统切换 ═══════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(167,139,250,0.15); color:var(--accent2);">💻</div>
+    <div class="section-title">系统切换</div>
+  </div>
+  <p class="section-desc">根据你的操作系统选择对应的模式。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12); color:var(--accent);">🪟</div>
+      <h3>Windows 系统</h3>
+      <p>将 WIN/MAC 选择开关拨到 <span class="highlight">WIN</span> 一侧。</p>
+      <p style="margin-top:8px;">默认为 Windows 键位布局，Win 键、Alt 键等功能正常。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(167,139,250,0.12); color:var(--accent2);">🍎</div>
+      <h3>Mac 系统</h3>
+      <p>将 WIN/MAC 选择开关拨到 <span class="highlight">MAC</span> 一侧。</p>
+      <p style="margin-top:8px;">切换为 Mac 键位布局，Command 键、Option 键等功能正常。</p>
+    </div>
+  </div>
+
+  <div class="info-box tip" style="margin-top:20px;">
+    💡 切换系统模式后，需要重新连接蓝牙或重新插入 USB 线才能生效。
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ 注意事项 ═══════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(248,113,113,0.15); color:var(--red);">⚠</div>
+    <div class="section-title">注意事项</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(251,191,36,0.3);">
+      <div class="card-icon" style="background:rgba(251,191,36,0.12); color:var(--amber);">🔋</div>
+      <h3>充电说明</h3>
+      <ul>
+        <li>使用 TYPE-C 数据线充电</li>
+        <li>充电时可继续使用（有线模式）</li>
+        <li>建议电量低于 20% 时及时充电</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(248,113,113,0.3);">
+      <div class="card-icon" style="background:rgba(248,113,113,0.12); color:var(--red);">❌</div>
+      <h3>常见问题</h3>
+      <ul>
+        <li><strong>蓝牙搜不到设备</strong>：确认开关在 BT 位置，长按 Fn+Q/W/E 3 秒</li>
+        <li><strong>2.4G 无法连接</strong>：确认接收器已插入，尝试 Fn+R 重新配对</li>
+        <li><strong>按键无反应</strong>：检查电源开关是否为 ON</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════════ CTA ═══════════════════════ -->
+<div class="cta">
+  <h2>需要更多帮助？</h2>
+  <p>查看完整产品介绍，了解答案98 的所有卖点</p>
+  <div class="cta-links" style="margin-top:20px;">
+    <a class="cta-link" href="product98.html">产品介绍 →</a>
+    <a class="cta-link" href="index.html">返回首页</a>
+  </div>
+</div>
+
+<div class="footer">
+  © 2007 - 2026 ikbc · 答案98 操作说明
+</div>
+
+</body>
+</html>
